@@ -11,9 +11,9 @@ def do_pack():
     arc = 'web_static_' + time.strftime("%Y%m%d%H%M%S") + '.' + 'tgz'
 
     if not exists("versions"):
-        local('mkdir -p versions')
+        local('mkdir versions')
     create = local("tar -cvzf versions/{} web_static".format(arc))
     if create is not None:
-        return "versions/{}".format(arc)
+        return arc
     else:
         return None
