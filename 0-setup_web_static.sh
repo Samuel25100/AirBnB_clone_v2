@@ -3,27 +3,27 @@
 sudo apt update && sudo apt install nginx -y
 
 sudo mkdir -p /data/web_static/releases/test/
+sudo mkdir -p /data/web_static/shared/
 
-content="\
+cont="\
 <html>
   <head>
   </head>
   <body>
     Holberton School
   </body>
-</html>" 
+</html>"
+
 sudo chown -R ubuntu:ubuntu /data/
 
-echo "$content" > /data/web_static/releases/test/index.html
+echo "$cont" > /data/web_static/releases/test/index.html
 
-sudo mkdir /data/web_static/current
-
-sudo ln -s -f /data/web_static/current /data/web_static/releases/test/
+sudo ln -s -f /data/web_static/releases/test/ /data/web_static/current
 
 sudo chown -R ubuntu:ubuntu /data/
 
 sudo ufw allow 'Nginx HTTP'
 
-sudo sed -i '/listen 80 default_server/a location /hbnb_static { alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
+sudo sed -i '/listen 80 default_server/a\\n\t\tlocation /hbnb_static {\n\t  alias /data/web_static/current/;\n\t\t  autoindex off;\n\t\t}' /etc/nginx/sites-enabled/default
 
 sudo service nginx restart
