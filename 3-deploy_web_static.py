@@ -11,14 +11,15 @@ def do_pack():
     time = datetime.now()
     arc = 'web_static_' + time.strftime("%Y%m%d%H%M%S") + '.' + 'tgz'
 
-    if not exists("versions"):
-        local('mkdir versions')
-    create = local("tar -cvzf versions/{} web_static".format(arc))
-    size = getsize(f"versions/{arc}")
-    print(f"web_static packed: versions/{arc} -> {size}")
-    if create is not None:
+    try:
+        if not exists("versions"):
+            local('mkdir versions')
+        local("tar -cvzf versions/{} web_static".format(arc))
+        size = getsize(f"versions/{arc}")
+        print(f"web_static packed: versions/{arc} -> {size}")
+        arc = "versions/{}".format(arc)
         return arc
-    else:
+    except:
         return None
 
 
@@ -29,7 +30,6 @@ def do_deploy(archive_path):
     fil_n = archive_path.split('/')[1].split('.')[0]
 
     r = put(archive_path, '/tmp/')
-    print(r)
     if r.failed:
         return False
     r = run('mkdir -p /data/web_static/releases/{}'.format(fil_n))
