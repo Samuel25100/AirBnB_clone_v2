@@ -24,7 +24,6 @@ class FileStorage:
             clname = cls.__name__
             for key, value in self.__objects.items():
                 if clname in str(key):
-                    value = value.to_dict()
                     obj[key] = value
             return obj
         return self.__objects
@@ -61,3 +60,7 @@ class FileStorage:
             key = obj.__class__.__name__ + '.' + (obj.id)
             del self.__objects[key]
             self.save()
+
+    def close(self):
+        """Deserialize the JSON file to object."""
+        self.reload()

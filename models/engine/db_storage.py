@@ -42,7 +42,7 @@ class DBStorage:
             for i in clist:
                 alld.extend(self.__session.query(i))
         for obj in alld:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
+            key = "{}.{}".format(type(obj).__name__, getattr(obj, "id"))
             objects[key] = obj
         return objects
 
@@ -64,3 +64,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(Session)
+
+    def close(self):
+        """Close the session."""
+        self.__session.close()
