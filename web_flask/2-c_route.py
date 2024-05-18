@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Start a Flask web application and return simple string."""
-import web_flask
+from flask import Flask
 
-app = web_flask.Flask(__name__)
+app = Flask(__name__)
 
 
 @app.route("/", strict_slashes=False)
