@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route("/states_list", strict_slashes=False)
 def State_list():
-    dic = storage.all(State)
+    dic = storage.all("State")
     result = {}
     for val in dic.values():
         result[val.name] = val.id
