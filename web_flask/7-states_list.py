@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Start a Flask web application and return simple string."""
 from models import storage
-from models import State
+from models import State, City
 from flask import Flask, render_template
 
 app = Flask(__name__)
@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route("/states_list", strict_slashes=False)
 def State_list():
-    dic = storage.all("State")
+    dic = storage.all(State)
     result = {}
     for val in dic.values():
         result[val.name] = val.id

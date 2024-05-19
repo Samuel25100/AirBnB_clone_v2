@@ -8,6 +8,7 @@ if getenv("HBNB_TYPE_STORAGE") == "db":
     from sqlalchemy import Column, Float, Integer, String, ForeignKey, Table
     from sqlalchemy.orm import relationship
     from models.base_model import Base
+    
     place_amenity = Table('place_amenity', Base.metadata,
                           Column('place_id', String(60),
                                  ForeignKey('places.id'),
